@@ -1,4 +1,5 @@
 import 'package:cybersecurity_quiz_awareness_app/screens/quizcategoriesscreen.dart';
+import 'package:cybersecurity_quiz_awareness_app/widgets/hs_grid_card.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -47,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: height * .025,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -83,8 +84,7 @@ class HomeScreen extends StatelessWidget {
                         crossAxisSpacing: width * 0.05,
                         mainAxisSpacing: height * 0.04,
                         children: [
-                          _buildGridCard(
-                            context,
+                          HomeScreenGridCard(
                             'assets/quiz_img.jpg', // Replace with actual image asset
                             'Quiz Categories',
                             () {
@@ -92,24 +92,21 @@ class HomeScreen extends StatelessWidget {
                                   QuizCategoriesScreen.routeName);
                             },
                           ),
-                          _buildGridCard(
-                            context,
+                          HomeScreenGridCard(
                             'assets/quiz_img.jpg', // Replace with actual image asset
                             'Quick Quiz',
                             () {
                               // Navigate to Random questions (time-based challenge)
                             },
                           ),
-                          _buildGridCard(
-                            context,
+                          HomeScreenGridCard(
                             'assets/reward_img.jpg', // Replace with actual image asset
                             'Achievements',
                             () {
                               // Navigate to Achievements
                             },
                           ),
-                          _buildGridCard(
-                            context,
+                          HomeScreenGridCard(
                             'assets/settings.jpg', // Replace with actual image asset
                             'Settings',
                             () {
@@ -159,48 +156,6 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildGridCard(BuildContext context, String imagePath, String title,
-      VoidCallback onTap) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
-
-    return GestureDetector(
-      onTap: onTap,
-      child: Card(
-        color: Colors.white,
-        elevation: 5,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(height * 0.02),
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(height * 0.007),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                imagePath,
-                height: height * 0.1,
-                width: width * 0.2,
-                fit: BoxFit.cover,
-              ),
-              SizedBox(height: height * 0.02),
-              Expanded(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: height * 0.02,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

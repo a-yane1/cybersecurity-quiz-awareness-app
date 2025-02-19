@@ -1,3 +1,4 @@
+import 'package:cybersecurity_quiz_awareness_app/widgets/elevated_body_container.dart';
 import 'package:flutter/material.dart';
 
 import 'homescreen.dart';
@@ -54,97 +55,80 @@ class _AuthScreenState extends State<AuthScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFE3F2FD), // Light blue background
-      body: Center(
-        child: Container(
-          height: height * 0.6,
-          width: width * 0.8,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 10,
-                spreadRadius: 1,
-                offset: Offset(0, 5),
-              ),
-            ],
-          ),
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.1),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
+      body: ElevatedContainer(
+        Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    isLogin ? "Login" : "Sign Up",
+                    style: TextStyle(
+                        fontSize: height * 0.04, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: height * 0.03),
+                  if (!isLogin)
+                    TextFormField(
+                      decoration: const InputDecoration(labelText: "Full Name"),
+                      validator: (value) =>
+                          value!.isEmpty ? "Enter your name" : null,
+                    ),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: "Email"),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: _validateEmail,
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: "Password"),
+                    obscureText: true,
+                    controller: _passwordController,
+                    validator: _validatePassword,
+                  ),
+                  if (!isLogin)
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: "Confirm Password",
+                      ),
+                      obscureText: true,
+                      validator: _validateConfirmPassword,
+                    ),
+                  SizedBox(height: height * 0.07),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        // Perform login or signup action
+                        Navigator.pushReplacementNamed(
+                            context, HomeScreen.routeName);
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: width * 0.2, vertical: height * 0.015),
+                      backgroundColor: Colors.blueAccent.shade200,
+                    ),
+                    child: Text(
                       isLogin ? "Login" : "Sign Up",
                       style: TextStyle(
-                          fontSize: height * 0.04, fontWeight: FontWeight.bold),
+                          fontSize: height * 0.02, color: Colors.white),
                     ),
-                    SizedBox(height: height * 0.03),
-                    if (!isLogin)
-                      TextFormField(
-                        decoration:
-                            const InputDecoration(labelText: "Full Name"),
-                        validator: (value) =>
-                            value!.isEmpty ? "Enter your name" : null,
-                      ),
-                    TextFormField(
-                      decoration: const InputDecoration(labelText: "Email"),
-                      keyboardType: TextInputType.emailAddress,
-                      validator: _validateEmail,
+                  ),
+                  SizedBox(height: height * 0.02),
+                  TextButton(
+                    onPressed: switchAuthMode,
+                    child: Text(
+                      isLogin
+                          ? "Don't have an account? Sign Up"
+                          : "Already have an account? Login",
+                      style: TextStyle(
+                          fontSize: height * 0.015, color: Colors.blueAccent),
                     ),
-                    TextFormField(
-                      decoration: const InputDecoration(labelText: "Password"),
-                      obscureText: true,
-                      controller: _passwordController,
-                      validator: _validatePassword,
-                    ),
-                    if (!isLogin)
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          labelText: "Confirm Password",
-                        ),
-                        obscureText: true,
-                        validator: _validateConfirmPassword,
-                      ),
-                    SizedBox(height: height * 0.07),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          // Perform login or signup action
-                          Navigator.pushReplacementNamed(
-                              context, HomeScreen.routeName);
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: width * 0.2, vertical: height * 0.015),
-                        backgroundColor: Colors.blueAccent.shade200,
-                      ),
-                      child: Text(
-                        isLogin ? "Login" : "Sign Up",
-                        style: TextStyle(
-                            fontSize: height * 0.02, color: Colors.white),
-                      ),
-                    ),
-                    SizedBox(height: height * 0.02),
-                    TextButton(
-                      onPressed: switchAuthMode,
-                      child: Text(
-                        isLogin
-                            ? "Don't have an account? Sign Up"
-                            : "Already have an account? Login",
-                        style: TextStyle(
-                            fontSize: height * 0.015, color: Colors.blueAccent),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
